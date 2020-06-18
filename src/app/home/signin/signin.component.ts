@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/auth.service';
@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/core/auth.service';
 export class SignInComponent implements OnInit{
     
     loginForm: FormGroup;
+    @ViewChild('userNameInput') userNameInput: ElementRef<HTMLInputElement>;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -33,6 +34,7 @@ export class SignInComponent implements OnInit{
                 err => { 
                     console.log(err);
                     this.loginForm.reset();
+                    this.userNameInput.nativeElement.focus(); //Nao pode usar o Renderer
                     alert('Invalid username or password');
                 }
             )
